@@ -4,6 +4,8 @@
 
 convert schema of Shotgun projet to graphviz
 
+you should first of all download in json file the SG schema with shotgun_api3.shotgun.Shotgun.schema_entity_read
+
 usage:
 
 * python sgschema2graphviz.py > test2.dot
