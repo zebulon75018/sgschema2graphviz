@@ -17,3 +17,10 @@ usage:
 
 "Special thanks to the Autodesk® Shotgun® Team. Copyright © AutodeskInc."
 
+
+Flask server to display schema shotgun.
+launch
+pip -r requirements.txt 
+
+python app.yp 
+![web app](/schemashotgun.png)
