@@ -1,0 +1,215 @@
+<html>
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</head>    
+<body>
+<style>
+ /*!
+ * Start Bootstrap - Simple Sidebar (https://startbootstrap.com/template-overviews/simple-sidebar)
+ * Copyright 2013-2017 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-simple-sidebar/blob/master/LICENSE)
+ */
+
+body {
+  overflow-x: hidden;
+}
+
+#searchentity {
+  position: sticky;
+  top:0px;
+}
+#wrapper {
+  padding-left: 0;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+  padding-left: 250px;
+}
+
+#sidebar-wrapper {
+  z-index: 1000;
+  position: fixed;
+  left: 250px;
+  width: 0;
+  height: 100%;
+  margin-left: -250px;
+  overflow-y: auto;
+  background: #000;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  width: 250px;
+}
+
+#page-content-wrapper {
+  width: 100%;
+  position: absolute;
+  padding: 15px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+  position: absolute;
+  margin-right: -250px;
+}
+
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+  position: absolute;
+  top: 0;
+  width: 250px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar-nav li {
+  text-indent: 20px;
+  line-height: 40px;
+}
+
+.sidebar-nav li a {
+  display: block;
+  text-decoration: none;
+  color: #999999;
+}
+
+.sidebar-nav li a:hover {
+  text-decoration: none;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar-nav li a:active, .sidebar-nav li a:focus {
+  text-decoration: none;
+}
+
+.sidebar-nav>.sidebar-brand {
+  height: 65px;
+  font-size: 18px;
+  line-height: 60px;
+}
+
+.sidebar-nav>.sidebar-brand a {
+  color: #999999;
+}
+
+.sidebar-nav>.sidebar-brand a:hover {
+  color: #fff;
+  background: none;
+}
+
+@media(min-width:768px) {
+  #wrapper {
+    padding-left: 0;
+  }
+  #wrapper.toggled {
+    padding-left: 250px;
+  }
+  #sidebar-wrapper {
+    width: 0;
+  }
+  #wrapper.toggled #sidebar-wrapper {
+    width: 250px;
+  }
+  #page-content-wrapper {
+    padding: 20px;
+    position: relative;
+  }
+  #wrapper.toggled #page-content-wrapper {
+    position: relative;
+    margin-right: 0;
+  }
+
+  td.entitytype {
+    font-style: italic;
+  }
+}
+</style>
+
+  <div id="wrapper" class="toggled">
+
+  <!-- Sidebar -->
+  <div id="sidebar-wrapper">        
+        <ul class="sidebar-nav" id="listentity">            
+            <input id="searchentity" class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search" onkeyup="mySearch()"/>
+            {% for entity in entities.keys() %}                          
+            <li>
+                <a href="#{{entity}}">{{entity}}</a>                
+            </li>
+            {%endfor%}
+        </ul>        
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+                
+
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>
+
+    {% for entity in entities.keys() %}
+      <h2 id="{{entity}}">{{entity}}</h2>
+      <table  class="table table-rwd-name table-hidden table-striped">
+      {% for field in entities[entity]["fields"] %}
+        <tr>
+        <td>{{field}}</td>
+        <td>{{entities[entity]["fields"][field]["name"]["value"]}}</td>
+        <td class="entitytype">
+          {% for typeentity in entities[entity]["fields"][field]["typeEntity"] %} 
+            <a href="#{{typeentity}}">{{typeentity}}</a> &nbsp;
+          {%endfor%}
+        </td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endfor %}
+
+
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+
+
+</div>
+
+ <!-- Menu Toggle Script -->
+ <script>
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+       
+       
+        function mySearch(){
+        // walk through
+        var searchInput = $('#searchentity').val().toLowerCase()
+        
+        $('#listentity').find('li').each(function(){
+            var text = $(this).text().toLowerCase()
+            if(text.indexOf(searchInput) > -1){
+                $(this).show()
+            } else{
+                $(this).hide()
+            }
+        });
+        }
+
+        </script>
+
+</body>
+</html>
